@@ -3,11 +3,57 @@
 require_once "database.php";
 
 $dbc = db_connect();
+
 $query = "SELECT * FROM `typescandles`";
 $data = mysqli_query($dbc, $query);
 
+// for ($i=1; $i <= 214; $i++) { 
+// 	$query2 = "UPDATE `products` SET `label` = 'black' WHERE `code` IN('У9', 'У11', 'У28', 'У32', 'У68', 'У69', 'У83', 'У103', 'У104', 'У114', 'У177')";	
+// 	mysqli_query($dbc, $query2);
+// }
+
+$queryRed = "SELECT * FROM `products` WHERE `label` = 'red'";
+$redCandles = mysqli_query($dbc, $queryRed);
 
 
+if (isset($_POST["redbtn"])) {
+	$queryred = "SELECT * FROM `products` WHERE `label` = 'red'";
+	$redCandles = mysqli_query($dbc, $queryred);
+	$showCandles = $redCandles;
+}elseif(isset($_POST["greenbtn"])){
+	$queryGreen = "SELECT * FROM `products` WHERE `label` = 'green'";
+	$greenCandles = mysqli_query($dbc, $queryGreen);
+	$showCandles = $greenCandles;
+}elseif (isset($_POST["bluebtn"])) {
+	$queryBlue = "SELECT * FROM `products` WHERE `label` = 'blue'";
+	$blueCandles = mysqli_query($dbc, $queryBlue);
+	$showCandles = $blueCandles;
+}elseif (isset($_POST["yellowbtn"])) {
+	$queryyellow = "SELECT * FROM `products` WHERE `label` = 'yellow'";
+	$yellowCandles = mysqli_query($dbc, $queryyellow);
+	$showCandles = $yellowCandles;
+}elseif (isset($_POST["pinkbtn"])) {
+	$querypink = "SELECT * FROM `products` WHERE `label` = 'pink'";
+	$pinkCandles = mysqli_query($dbc, $querypink);
+	$showCandles = $pinkCandles;
+}elseif (isset($_POST["orangebtn"])) {
+	$queryorange = "SELECT * FROM `products` WHERE `label` = 'orange'";
+	$orangeCandles = mysqli_query($dbc, $queryorange);
+	$showCandles = $orangeCandles;
+}elseif (isset($_POST["blackbtn"])) {
+	$queryblack = "SELECT * FROM `products` WHERE `label` = 'black'";
+	$blackCandles = mysqli_query($dbc, $queryblack);
+	$showCandles = $blackCandles;
+}elseif (isset($_POST["lingueebtn"])) {
+	$querylinguee = "SELECT * FROM `products` WHERE `label` = 'linguee'";
+	$lingueeCandles = mysqli_query($dbc, $querylinguee);
+	$showCandles = $lingueeCandles;
+}
+else{
+	$showCandles = $redCandles;
+}
+
+// $showCandles = '';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,10 +65,14 @@ $data = mysqli_query($dbc, $query);
 <body>
 	
 	<div class="header">
+		<div class="maintabs">	
+			<div class="topline"></div>
+		</div>
 		<div class="contentheader">
 			<div class="left">
-				<p><strong>Candle Studio</strong></p>
-				<p>Виготовлення художніх різьблених свічкок на замовлення на будь-який смак</p>
+				<h1>Candle Studio</h1>
+				<hr>
+				<h2>Виготовлення художніх різьблених свічок на подарунок чи під замовлення на будь-який смак</h2>
 			</div>
 			<div class="right">
 				<img class="pic" src="https://via.placeholder.com/252x102?text=Logo+Candle-studio" alt="">
@@ -90,24 +140,32 @@ $data = mysqli_query($dbc, $query);
 	  <div class="workspace">
 			<div class="lefttools hidetools">
 				<h3>Виберіть колір свічки</h3>
-					<div class="colorbox">
-						<div class="i red"></div>
-						<div class="i green"></div>
-						<div class="i blue"></div>
-						<div class="i orange"></div>
-						<div class="i pink"></div>
-						<div class="i white"></div>
-						<div class="i black"></div>			
-					</div>
-					<div class="bigbox">
-						<img class="imgcolor" src="img/У2.jpg" width="200" height="300" alt="">
-						<img class="imgcolor" src="img/У1.jpg" width="200" height="300" alt="">
-						<img class="imgcolor" src="img/У1.jpg" width="200" height="300" alt="">
-						<img class="imgcolor" src="img/У2.jpg" width="200" height="300" alt="">
-						<img class="imgcolor" src="img/У1.jpg" width="200" height="300" alt="">
-						<img class="imgcolor" src="img/У2.jpg" width="200" height="300" alt="">
-						<img class="imgcolor" src="img/У2.jpg" width="200" height="300" alt="">
-					</div>
+				<form action="index.php" method="POST">
+				<div class="colorbox">
+						<button class="i green" name="greenbtn"></button>
+						<button class="i red" name="redbtn"></button>
+						<button class="i orange" name="orangebtn"></button>
+						<button class="i yellow" name="yellowbtn"></button>
+						<button class="i pink" name="pinkbtn"></button>
+						<button class="i linguee" name="lingueebtn"></button>
+						<button class="i blue" name="bluebtn"></button>
+						<button class="i black" name="blackbtn"></button>		
+					
+				</div>
+				</form>
+				<div class="bigbox">
+					<?php
+						$i=1;
+							while ($art1 = mysqli_fetch_assoc($showCandles)) {
+						?>
+							<img class="imgcolor" src="img/<?php echo $art1["photo"];?>" width="200" height="300" title="<?php echo $art1["name"];?>" alt="<?php echo $art1["name"];?>">
+							
+							<!-- <img src="img/<?php echo $art["image"];?>" alt="" width="50%">	 -->
+						<?php
+						$i++;
+						}
+						?>
+				</div>
 				<button class="nextbtn tablinks" onclick="openCity(event, 'Color')">Далі</button>
 			</div>
 			<div class="modelcandle">
