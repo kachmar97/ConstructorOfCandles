@@ -35,7 +35,7 @@ function sizePic() {
    }
 
 
-// Chnge picture
+// Change picture
 $( ".forms input").click(function(){
   $("#pic").attr("src", $(this).val());
 });
@@ -48,11 +48,39 @@ $(".nextbtn").click(function(){
 $('.tab2').click(function() {
   if(($('#r6').is(':checked'))||($('#r5').is(':checked'))) { $('.hidetools').show() }else{$('.hidetools').hide()}
 });
-// $('#r3').attr('checked')?alert('123'):false;
 
-// alert($(this).val());
+// <-- Переключання вкладок
+if($('#pic2').attr('src') == ''){
+  $('.tab4').css('background', '#ccc');
+  $('.tab4').css('color','grey');
+}
 
 $('.imgcolor').click(function(){
-  // alert($this).attr('src'));
   $('#pic2').attr('src', $(this).attr('src')); 
-})
+  $('#pic3').attr('src', $(this).attr('src')); 
+  $('.choosephoto').remove();
+  $('#tab4').css('pointerEvents', 'auto');
+  $('#tab4').css('background', '#84B000');
+  $('#tab4').css('color', '#000');
+
+  $('#tab4').click(function(){
+    if ( $("#tab4").hasClass("active") ){
+      $('#tab4').css('background', '#003D00');
+      $('#tab4').css('color', '#fff');
+    };
+  });
+
+  $('.tab1, .tab2').click(function(){
+    $('#tab4').css('background', '#84B000');
+    $('#tab4').css('color', '#000');
+  })
+});
+// Переключання вкладок -->
+
+function textSize(){
+  $('.choosephoto').animate({fontSize: '35px'}, 1000);
+  $('.choosephoto').animate({fontSize: '30px'}, 1000);
+}
+setInterval(textSize);
+
+

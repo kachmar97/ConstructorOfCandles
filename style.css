@@ -2,6 +2,8 @@ body{
   background: #A8AEC1;
   font-size: 18px;
   font-family: arial;
+  margin: 0px;
+  padding: 0px;
 }
 /* Style the tab */
 h2{
@@ -14,6 +16,7 @@ h2{
 }
 
 h3{
+  margin-bottom: 0px;
   color: #000;
   font-family: arial;
   font-weight: bold;
@@ -23,6 +26,16 @@ h3{
   background: #84B000;
   width: 100%;
   height: 20px;
+  border-bottom: 1px solid #003D00;
+}
+
+.bottomline{
+  height: 834px;
+  border-bottom: 20px solid #84B000; 
+}
+.bottomborder{
+  height: 834px;
+  border-bottom: 1px solid #003D00; 
 }
 
 /* Style the buttons that are used to open the tab content */
@@ -37,6 +50,8 @@ h3{
   cursor: pointer;
   padding: 14px 35px;
   transition: 0.3s;
+  border: 1px solid #003D00;
+  border-bottom: none;
 }
 
 /* Change background color of buttons on hover */
@@ -55,11 +70,12 @@ h3{
 
 /* Style the tab content */
 .tabcontent {
-  /*border: 1px solid #84B000;*/
+  border: 1px solid #003D00;
+  background: #EBE7C3;
   margin: 0 auto;
   width: 1200px;
+  height: 854px;
   clear: both;
-  background: #EBE7C3;
 }
 
 
@@ -72,15 +88,12 @@ h3{
 
 .lefttools{
   display: inline-block;
-  padding-left: 30px;
-  width: 250px;
+  margin-left: 30px;
+  width: 469px;
+  /*background: #000;*/
 }
 
-.workspace{
-  height: 854px;
-  display: inline-block;
-  width: 100%;
-}
+
 
 .content{
   margin: 0 auto;
@@ -91,9 +104,9 @@ h3{
 .header{
   background: #EBE7C3;
   margin: 0 auto;
-  width: 1199.4px;
+  width: 1202px;
   clear: both;
-  /*border: 1px solid #84B000;*/
+  border: 1px solid #003D00;
 }
 
 .left{
@@ -127,11 +140,13 @@ h3{
 }
 
 .forms{
+  margin-top: 20px;
+  padding-left: 10px;
   color: #000;
   display: inline-block;
   border: 2px solid #84B000;
   border-radius: 5px;
-  width: 100%;
+  width: calc(100% - 12px);
   font-size: 18px;
 }
 
@@ -139,6 +154,10 @@ h3{
   margin: 10px;
   margin-left: 20px;
   cursor: pointer;
+}
+
+input[type="radio"] {
+    background-color: green;
 }
 
 label{
@@ -150,19 +169,10 @@ label{
 }
 
 /*Slider*/
-.candle{
-  
-}
 
-.candlesize{
-  color: #000;
+/*.candlesize{
   margin-top: 20px;
-  font-size: 18px;
-}
-
-.slider{
-  margin-top: 15px;
-}
+}*/
 
 .maintabs{
   display: flex;
@@ -171,8 +181,8 @@ label{
 
 .maintab{
   background: #84B000;
-  /*border: 1px solid #003D00;*/
-  padding: 10px 82.7px;
+  border-top: 1px solid #003D00;
+  padding: 10px 83px;
 }
 
 .maintab:hover{
@@ -183,11 +193,11 @@ label{
 }
 /*
 .maintab:first-child{
-  border-left: none;
+  border-left: 1px solid #003D00;
 }
 
 .maintab:last-child{
-  border-right: none;
+  border-right: 1px solid #003D00;
 }*/
 
 .active{
@@ -198,12 +208,12 @@ label{
 .nextbtn{
   margin-top: 15px;
   font-size: 18px;
-  background: #84B000;
-  color: #003D00;
+  background: #003D00;
+  color: #fff;
   border-radius: 5px;
   border: 1px solid #000;
   height: 35px;
-  width: 464px;
+  width: 100%;
 }
 
 .nextbtn:hover{
@@ -217,12 +227,12 @@ label{
 .bigbox{
   display: inline-flex;
   flex-wrap: wrap;
-  width: 464px;
-  height: 660px;
+  width: calc(100%-2px); /*2px - товщина рамки зліва і справа*/;
+  height: 640px;
   background: #FEF5D8;
   overflow: auto;
   /*padding: 20px;*/
-  border: 2px solid #ccc;
+  border: 2px solid #84B000;
 }
 
 .box{
@@ -252,13 +262,13 @@ label{
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: 454px;
+  width: 100%;
   height: 60px;
   /*border: 2px solid #84B000; */
   border-top-left-radius: 5px; 
   border-top-right-radius: 5px; 
   margin-bottom: 10px;
-  padding: 0 10px;
+  
 }
 
 .i{
@@ -309,4 +319,115 @@ label{
 
 .black{
   background: #362920; 
+}
+
+/*Radio button styles*/
+input[type="radio"] {
+  margin: 10px;
+}
+/*Radio button styles*/
+
+
+/*Slider range*/
+.slidecontainer {
+  width: 100%; /* Width of the outside container */
+}
+
+/* The slider itself */
+.slider {
+  margin-top: 30px;
+  margin-bottom: 20px; 
+  -webkit-appearance: none;  /* Override default CSS styles */
+  appearance: none;
+  width: 100%; /* Full-width */
+  height: 15px;
+  border-radius: 5px; 
+  /*height: 25px;  Specified height */
+  background: #d3d3d3; /* Grey background */
+  outline: none; /* Remove outline */
+  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+  transition: opacity .2s;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+  opacity: 1; /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */ 
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px;
+  border-radius: 50%;
+  border: 1px solid black; 
+  /*height: 25px;  Slider handle height */
+  background: #84B000; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px;
+  border-radius: 50%;
+  /*height: 25px;  Slider handle height */
+  background: #84B000; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+}
+
+/*Footer*/
+
+footer{
+  margin: 40px auto 20px ; 
+  border: 1px solid #003D00;
+  background: #EBE7C3;
+  width: 1200px;
+  height: 150px;
+  clear: both;
+}
+
+.footerbottomline{
+
+  height: 109px;
+  border-bottom: 20px solid #84B000; 
+}
+.footerbottomborder{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 109px;
+  border-bottom: 1px solid #003D00; 
+
+}
+
+.f_block{
+  padding: 10px;
+  padding-top: 14px;
+  padding-left: 20px;
+  padding-right: 20px;
+  width: 150px;
+  height: 26px;
+  color: #fff;
+  background: #003D00;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.f_block:hover{
+  cursor: pointer;
+  background: #388B00;
+  text-decoration: underline;
+  color: #000;
+
+}
+
+.choosephoto{
+  font-size: 30px;
+  color: #362920;
+}
+
+.tab4{
+  pointer-events: none;
 }

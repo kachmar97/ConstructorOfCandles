@@ -90,46 +90,47 @@ else{
 	<!-- Tab links -->
 	<div class="content">
 		<div class="tab">
-		  <button class="tablinks tab1" onclick="openCity(event, 'Form')">Форма</button>
+		  <button class="tablinks tab1" onclick="openCity(event, 'Form')" >Форма</button>
 		  <button class="tablinks tab2" onclick="openCity(event, 'Design')" id="defaultOpen" >Дизайн</button>
 		  <!-- <button class="tablinks tab3" onclick="openCity(event, 'Design')">Узор</button> -->
-		  <button class="tablinks tab4" onclick="openCity(event, 'Decoration')">Декорація</button>
+		  <button class="tablinks tab4" id="tab4" onclick="openCity(event, 'Decoration')">Декорація</button>
 		</div>
 	</div>
 	
 	<!-- Tab content -->
 	<div id="Form" class="tabcontent">
-		<div class="workspace ">
-			<div class="lefttools">
-				<h3>Виберіть форму свічки</h3>
-				<div class="forms">
-					<?php
-					$i=1;
-						while ($art = mysqli_fetch_assoc($data)) {
-					?>
-						<input 
-							type="radio" 
-							class="radiobtn" 
-							id="r<?php echo $i?>"
-							name="candletype" 
-							value="img/<?php echo $art["image"];?>" 
-							<?php if($art["name"] == 'Піраміда'){echo "checked";}?>
-						><label for="r<?php echo $i?>"><?php echo $art["name"];?></label>
-						<br>
-						<!-- <img src="img/<?php echo $art["image"];?>" alt="" width="50%">	 -->
-					<?php
-					$i++;
-					}
-					?>	
+		<div class="bottomline ">
+			<div class="bottomborder">
+				<div class="lefttools">
+					<h3>Виберіть форму свічки</h3>
+					<div class="forms">
+						<?php
+						$i=1;
+							while ($art = mysqli_fetch_assoc($data)) {
+						?>
+							<input 
+								type="radio" 
+								class="radiobtn" 
+								id="r<?php echo $i?>"
+								name="candletype" 
+								value="img/<?php echo $art["image"];?>" 
+								<?php if($art["name"] == 'Піраміда'){echo "checked";}?>
+							><label for="r<?php echo $i?>"><?php echo $art["name"];?></label>
+							<br>
+							<!-- <img src="img/<?php echo $art["image"];?>" alt="" width="50%">	 -->
+						<?php
+						$i++;
+						}
+						?>	
+					</div>
+					<h3 class="candlesize">Розмір свічки: <span>16</span>см.</h3>
+					<input class="slider" type="range" min="1" max="11" id="size" oninput="sizePic()" value="6">
+					<button class="nextbtn tablinks" onclick="openCity(event, 'Design')">Далі</button>
 				</div>
-				<img src="" alt="">
-				<p class="candlesize">Розмір свічки: <span>16</span></p>
-				<input class="slider" type="range" min="1" max="11" id="size" oninput="sizePic()" value="6">
-				<button class="nextbtn tablinks" onclick="openCity(event, 'Color')">Далі</button>
-			</div>
-			<div class="modelcandle">
-				<div class="candle">
-					<img id="pic" src="img/П1.png" alt="" width="420">
+				<div class="modelcandle">
+					<div class="candle">
+						<img id="pic" src="img/П1.png" alt="" width="420">
+					</div>
 				</div>
 			</div>
 		</div>
@@ -137,49 +138,68 @@ else{
 	
 	
 	<div id="Design" class="tabcontent">
-	  <div class="workspace">
-			<div class="lefttools hidetools">
-				<h3>Виберіть колір свічки</h3>
-				<form action="index.php" method="POST">
-				<div class="colorbox">
-						<button class="i green" name="greenbtn"></button>
-						<button class="i red" name="redbtn"></button>
-						<button class="i orange" name="orangebtn"></button>
-						<button class="i yellow" name="yellowbtn"></button>
-						<button class="i pink" name="pinkbtn"></button>
-						<button class="i linguee" name="lingueebtn"></button>
-						<button class="i blue" name="bluebtn"></button>
-						<button class="i black" name="blackbtn"></button>		
-					
-				</div>
-				</form>
-				<div class="bigbox">
-					<?php
-						$i=1;
-							while ($art1 = mysqli_fetch_assoc($showCandles)) {
-						?>
-							<img class="imgcolor" src="img/<?php echo $art1["photo"];?>" width="200" height="300" title="<?php echo $art1["name"];?>" alt="<?php echo $art1["name"];?>">
-							
-							<!-- <img src="img/<?php echo $art["image"];?>" alt="" width="50%">	 -->
+	  	<div class="bottomline ">
+			<div class="bottomborder">
+				<div class="lefttools hidetools">
+					<h3>Виберіть колір свічки</h3>
+					<form action="index.php" method="POST">
+					<div class="colorbox">
+							<button class="i green" name="greenbtn"></button>
+							<button class="i red" name="redbtn"></button>
+							<button class="i orange" name="orangebtn"></button>
+							<button class="i yellow" name="yellowbtn"></button>
+							<button class="i pink" name="pinkbtn"></button>
+							<button class="i linguee" name="lingueebtn"></button>
+							<button class="i blue" name="bluebtn"></button>
+							<button class="i black" name="blackbtn"></button>		
+						
+					</div>
+					</form>
+					<div class="bigbox">
 						<?php
-						$i++;
-						}
-						?>
+							$i=1;
+								while ($art1 = mysqli_fetch_assoc($showCandles)) {
+							?>
+								<img class="imgcolor" src="img/<?php echo $art1["photo"];?>" width="200" height="300" title="<?php echo $art1["name"];?>" alt="<?php echo $art1["name"];?>">
+								
+								<!-- <img src="img/<?php echo $art["image"];?>" alt="" width="50%">	 -->
+							<?php
+							$i++;
+							}
+							?>
+					</div>
+					<button class="nextbtn tablinks" onclick="openCity(event, 'Color')">Далі</button>
 				</div>
-				<button class="nextbtn tablinks" onclick="openCity(event, 'Color')">Далі</button>
-			</div>
-			<div class="modelcandle">
-				<div class="candle">
-					<img id="pic2" src="img/У1.jpg" alt="" width="420">
+				<div class="modelcandle">
+					<h3 class="choosephoto">Виберіть фото свічки</h3>
+					<div class="candle">
+						<img id="pic2" src="" alt="" width="420">
+					</div>
 				</div>
-			</div>
+			</div>	
 		</div> 
 	</div>
 
 	<div id="Decoration" class="tabcontent">
-	  <h3>Декорація</h3>
-	  <p>Tokyo is the capital of Japan.</p>
+		<div class="modelcandle">
+			<div class="candle">
+				<img id="pic3" src="" alt="" width="420">
+			</div>
+		</div>
 	</div>
+
+	<footer>
+		<div class="topline">
+		</div>
+		<div class="footerbottomline ">
+			<div class="footerbottomborder">
+				<div class="f_block">Товари</div>
+				<div class="f_block">Доставка і оплата</div>
+				<div class="f_block">Контакти</div>
+				<div class="f_block">Графік роботи</div>
+			</div>
+		</div>
+	</footer>
 
 	
 	<!-- JQuery -->
