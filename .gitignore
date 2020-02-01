@@ -1,0 +1,10 @@
+# trash folder
+img/trash
+
+#photoshop files
+img/Forms/*.psd
+img/Decoration/*.psd
+
+#img folder
+img/*
+*.psd

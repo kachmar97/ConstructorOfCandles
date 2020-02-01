@@ -1,222 +1,273 @@
 <?php
-// $dbc = mysqli_connect('localhost', 'root', '123456', 'candlestudio') or DIE ('Не вдалося з’эднатися з БД');
-require_once "database.php";
+require_once "include/database.php";
 
 $dbc = db_connect();
 
-$query = "SELECT * FROM `typescandles`";
-$data = mysqli_query($dbc, $query);
-
-// for ($i=1; $i <= 214; $i++) { 
-// 	$query2 = "UPDATE `products` SET `label` = 'black' WHERE `code` IN('У9', 'У11', 'У28', 'У32', 'У68', 'У69', 'У83', 'У103', 'У104', 'У114', 'У177')";	
-// 	mysqli_query($dbc, $query2);
-// }
-
-$queryRed = "SELECT * FROM `products` WHERE `label` = 'red'";
-$redCandles = mysqli_query($dbc, $queryRed);
-
-
-if (isset($_POST["redbtn"])) {
-	$queryred = "SELECT * FROM `products` WHERE `label` = 'red'";
-	$redCandles = mysqli_query($dbc, $queryred);
-	$showCandles = $redCandles;
-}elseif(isset($_POST["greenbtn"])){
-	$queryGreen = "SELECT * FROM `products` WHERE `label` = 'green'";
-	$greenCandles = mysqli_query($dbc, $queryGreen);
-	$showCandles = $greenCandles;
-}elseif (isset($_POST["bluebtn"])) {
-	$queryBlue = "SELECT * FROM `products` WHERE `label` = 'blue'";
-	$blueCandles = mysqli_query($dbc, $queryBlue);
-	$showCandles = $blueCandles;
-}elseif (isset($_POST["yellowbtn"])) {
-	$queryyellow = "SELECT * FROM `products` WHERE `label` = 'yellow'";
-	$yellowCandles = mysqli_query($dbc, $queryyellow);
-	$showCandles = $yellowCandles;
-}elseif (isset($_POST["pinkbtn"])) {
-	$querypink = "SELECT * FROM `products` WHERE `label` = 'pink'";
-	$pinkCandles = mysqli_query($dbc, $querypink);
-	$showCandles = $pinkCandles;
-}elseif (isset($_POST["orangebtn"])) {
-	$queryorange = "SELECT * FROM `products` WHERE `label` = 'orange'";
-	$orangeCandles = mysqli_query($dbc, $queryorange);
-	$showCandles = $orangeCandles;
-}elseif (isset($_POST["blackbtn"])) {
-	$queryblack = "SELECT * FROM `products` WHERE `label` = 'black'";
-	$blackCandles = mysqli_query($dbc, $queryblack);
-	$showCandles = $blackCandles;
-}elseif (isset($_POST["lingueebtn"])) {
-	$querylinguee = "SELECT * FROM `products` WHERE `label` = 'linguee'";
-	$lingueeCandles = mysqli_query($dbc, $querylinguee);
-	$showCandles = $lingueeCandles;
-}
-else{
-	$showCandles = $redCandles;
-}
-
-// $showCandles = '';
+$queryAllProducts = "SELECT * FROM `products` ORDER BY id DESC LIMIT 8";
+$AllProducts = mysqli_query($dbc, $queryAllProducts);
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Document</title>
-	<link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>Candle Studio</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="style.css">
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
-	
-	<div class="header">
-		<div class="maintabs">	
-			<div class="topline"></div>
-		</div>
-		<div class="contentheader">
-			<div class="left">
-				<h1>Candle Studio</h1>
-				<hr>
-				<h2>Виготовлення художніх різьблених свічок на подарунок чи під замовлення на будь-який смак</h2>
-			</div>
-			<div class="right">
-				<img class="pic" src="https://via.placeholder.com/252x102?text=Logo+Candle-studio" alt="">
-				
-			</div>
-		</div>
-		<div class="maintabs">	
-			<div class="maintab">Головна</div>
-			<div class="maintab">Товари</div>
-			<div class="maintab active">Конструктор</div>
-			<div class="maintab">Контакти</div>
-			<div class="maintab">Про нас</div>
-		</div>
-	</div>
-	<!-- Tab links -->
-	<div class="content">
-		<div class="tab">
-		  <button class="tablinks tab1" onclick="openCity(event, 'Form')" >Форма</button>
-		  <button class="tablinks tab2" onclick="openCity(event, 'Design')" id="defaultOpen" >Дизайн</button>
-		  <!-- <button class="tablinks tab3" onclick="openCity(event, 'Design')">Узор</button> -->
-		  <button class="tablinks tab4" id="tab4" onclick="openCity(event, 'Decoration')">Декорація</button>
-		</div>
-	</div>
-	
-	<!-- Tab content -->
-	<div id="Form" class="tabcontent">
-		<div class="bottomline ">
-			<div class="bottomborder">
-				<div class="lefttools">
-					<h3>Виберіть форму свічки</h3>
-					<div class="forms">
-						<?php
-						$i=1;
-							while ($art = mysqli_fetch_assoc($data)) {
-						?>
-							<input 
-								type="radio" 
-								class="radiobtn" 
-								id="r<?php echo $i?>"
-								name="candletype" 
-								value="img/<?php echo $art["image"];?>" 
-								<?php if($art["name"] == 'Піраміда'){echo "checked";}?>
-							><label for="r<?php echo $i?>"><?php echo $art["name"];?></label>
-							<br>
-							<!-- <img src="img/<?php echo $art["image"];?>" alt="" width="50%">	 -->
-						<?php
-						$i++;
-						}
-						?>	
-					</div>
-					<h3 class="candlesize">Розмір свічки: <span>16</span>см.</h3>
-					<input class="slider" type="range" min="1" max="11" id="size" oninput="sizePic()" value="6">
-					<button class="nextbtn tablinks" onclick="openCity(event, 'Design')">Далі</button>
-				</div>
-				<div class="modelcandle">
-					<div class="candle">
-						<img id="pic" src="img/П1.png" alt="" width="420">
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	
-	<div id="Design" class="tabcontent">
-	  	<div class="bottomline ">
-			<div class="bottomborder">
-				<div class="lefttools hidetools">
-					<h3>Виберіть колір свічки</h3>
-					<form action="index.php" method="POST">
-					<div class="colorbox">
-							<button class="i green" name="greenbtn"></button>
-							<button class="i red" name="redbtn"></button>
-							<button class="i orange" name="orangebtn"></button>
-							<button class="i yellow" name="yellowbtn"></button>
-							<button class="i pink" name="pinkbtn"></button>
-							<button class="i linguee" name="lingueebtn"></button>
-							<button class="i blue" name="bluebtn"></button>
-							<button class="i black" name="blackbtn"></button>		
-						
-					</div>
-					</form>
-					<div class="bigbox">
-						<?php
-							$i=1;
-								while ($art1 = mysqli_fetch_assoc($showCandles)) {
-							?>
-								<img class="imgcolor" src="img/<?php echo $art1["photo"];?>" width="200" height="300" title="<?php echo $art1["name"];?>" alt="<?php echo $art1["name"];?>">
-								
-								<!-- <img src="img/<?php echo $art["image"];?>" alt="" width="50%">	 -->
-							<?php
-							$i++;
-							}
-							?>
-					</div>
-					<button class="nextbtn tablinks" onclick="openCity(event, 'Color')">Далі</button>
-				</div>
-				<div class="modelcandle">
-					<h3 class="choosephoto">Виберіть фото свічки</h3>
-					<div class="candle">
-						<img id="pic2" src="" alt="" width="420">
-					</div>
-				</div>
-			</div>	
-		</div> 
-	</div>
+<header>
+<div class="maintabs">	
+<div class="topline"></div>
+</div>
+<div class="contentheader">
+<div class="left">
+<h1>Candle Studio</h1>
+<hr>
+<h2>Виготовлення художніх різьблених свічок на подарунок чи під замовлення на будь-який смак</h2>
+</div>
+<div class="right">
+<a href="index.php">
+<img class="logo" src="img/logo/logo4.jpg" width="250" alt="">
+</a>
+<a href="basket.php">
+<i class="fa fa-shopping-basket basketimg"></i>
+</a>
+</div>
+</div>
+<div class="maintabs">	
+<a href="index.php"><div class="maintab active">Головна</div></a>
+<a href="products.php"><div class="maintab">Товари</div></a>
+<a href="constructor.php#constructor-page"><div class="maintab">Конструктор</div></a>
+<a href="contacts.php"><div class="maintab">Контакти</div></a>
+<a href="aboutus.php"><div class="maintab">Про нас</div></a>
+</div>
+</header>
 
-	<div id="Decoration" class="tabcontent">
-		<div class="modelcandle">
-			<div class="candle">
-				<img id="pic3" src="" alt="" width="420">
-			</div>
-		</div>
-	</div>
+<div class="wrapper">
+<h2 style="width: 1100px; margin: 20px auto; margin-top: 50px; text-align: center;">Різьблені свічки ручної роботи</h2>
+<div class="slideshow-container">
 
-	<footer>
-		<div class="topline">
-		</div>
-		<div class="footerbottomline ">
-			<div class="footerbottomborder">
-				<div class="f_block">Товари</div>
-				<div class="f_block">Доставка і оплата</div>
-				<div class="f_block">Контакти</div>
-				<div class="f_block">Графік роботи</div>
-			</div>
-		</div>
-	</footer>
+<div class="mySlides fade">
+<!-- <div class="numbertext">1 / 3</div> -->
+<img src="img/setOfCandles/set2.jpg" style="width:100%">
+<!-- <div class="sliderText">Caption Text</div> -->
+</div>
 
-	
-	<!-- JQuery -->
-	<script 
-		src="https://code.jquery.com/jquery-3.3.1.js"
-	  	integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-	  	crossorigin="anonymous">
-	</script>
-	<script>
-		// Some jquery for check working
-		// $('.tab').click(function(){
-		// 	alert(123);
-		// })
-	</script>
-	<script>
-		
-	</script>
-	<script src="scripts.js"></script>
+<div class="mySlides fade">
+<!-- <div class="numbertext">2 / 3</div> -->
+<img src="img/setOfCandles/set5.jpg" style="width:100%">
+<!-- <div class="sliderText">Caption Two</div> -->
+</div>
+
+<div class="mySlides fade">
+<!-- <div class="numbertext">3 / 3</div> -->
+<img src="img/setOfCandles/set1.jpg" style="width:100%">
+<!-- <div class="sliderText">Caption Three</div> -->
+</div>
+
+<div class="mySlides fade">
+<!-- <div class="numbertext">3 / 3</div> -->
+<img src="img/setOfCandles/set4.jpg" style="width:100%">
+<!-- <div class="sliderText">Caption Three</div> -->
+</div>
+
+<div class="mySlides fade">
+<!-- <div class="numbertext">5 / 3</div> -->
+<img src="img/setOfCandles/set3.jpg" style="width:100%">
+<!-- <div class="sliderText">Caption Three</div> -->
+</div>
+<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+<a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+</div>
+
+<div style="text-align:center">
+<span class="dot" onclick="currentSlide(1)"></span> 
+<span class="dot" onclick="currentSlide(2)"></span> 
+<span class="dot" onclick="currentSlide(3)"></span> 
+<span class="dot" onclick="currentSlide(4)"></span> 
+<span class="dot" onclick="currentSlide(5)"></span> 
+</div>
+<div class="mainbox greenline">
+<h3 class="sectionName">Новинки</h3>	
+<a href="products.php"><h3 class="goToLink">Всі товари</h3></a>
+</div>
+
+<div class="mainbox productbox">
+<?php
+$i=1;
+while ($prod = mysqli_fetch_assoc($AllProducts)) {
+?>
+
+<div class="container">
+<img src="img/<?php echo $prod["photo"];?>" alt="Avatar" class="image">
+<div class="middle">
+<div class="text"><?php echo $prod["name"];?></div>
+<div class="price">	
+<?php echo $prod["price"];?>грн.
+</div>
+<button class="buybtn" onClick="addToCart(<?php echo $prod["id"];?>,'<?php echo $prod["code"];?>','<?php echo $prod["photo"];?>','<?php echo $prod["name"];?>',<?php echo $prod["price"];?>)">Купити</button>
+</div>      
+</div>
+<?php
+$i++;
+}
+?>
+</div>
+<div class="greenline">
+
+</div>
+<div class="mainbox greenline">
+<h3 class="sectionName">Конструктор товару</h3>	
+<a href="constructor.php#constructor-page"><h3 class="goToLink">Перейти до конструктора</h3></a>
+</div>
+
+<div class="mainbox constructor">
+<p>Створіть свою унікальну різьблену свічку в нашому конcтрукторі товару</p>
+<img src="img/constructorForm.png" alt="" width="70%">	
+</div>
+
+<div class="mainbox greenline ourContacts">
+<h3 class="sectionName">Наші контакти</h3>	
+<a href="contacts.php"><h3 class="goToLink">Контакти</h3></a>
+</div>
+
+<div class="mainbox contactsSection">
+<div class="contactblock">
+<img src="img/Contacts/user1_200x200.jpg" alt="">
+<div class="contactName">
+<h4>Марія Герасимлюк</h4>
+<h5>Голова компанії, майстер по свічкарству</h5>	
+</div>
+<div class="contactInfo">
+<div>
+<b>Facebook:</b> 
+<br>
+<a href="https://www.facebook.com/candle.studio1">candle.studio1</a>
+</div>
+<div>
+<b>Instagram:</b>
+<br>
+<a href="https://www.instagram.com/candle_studio_/">candle_studio_</a>
+</div>
+<div>
+<b>Телефон:</b>
+<br>
+<a>096 144 37 50</a>
+</div>
+</div>
+</div>
+<div class="contactblock">
+<img src="img/Contacts/user2_200x200.jpg" alt="">
+<div class="contactName">
+<h4>Іван Герасимлюк</h4>
+<h5>Майстер по свічкарству</h5>	
+</div>
+<div class="contactInfo">
+<div>
+<b>Facebook:</b> 
+<br>
+<a href="https://www.facebook.com/ifivafans">ifivafans</a>
+</div>
+<div>
+<b>Instagram:</b>
+<br>
+<a href="https://www.instagram.com/ivangerasimliuk/">ivangerasimliuk</a>
+</div>
+<div>
+<b>Телефон:</b>
+<br>
+<a>098 727 89 20 </a>
+</div>
+</div>
+</div>
+<div class="contactblock">
+<img src="img/Contacts/user3_200x200.jpg" alt="">
+<div class="contactName">
+<h4>Ярослава Герасимлюк</h4>
+<h5>Майстер по свічкарству</h5>	
+</div>
+<div class="contactInfo">
+<div>
+<b>Facebook:</b> 
+<br>
+<a href="https://www.facebook.com/candle.studio1">candle.studio1</a>
+</div>
+<div>
+<b>Instagram:</b>
+<br>
+<a href="https://www.instagram.com/candle_studio_/">candle_studio_</a>
+</div>
+<div>
+<b>Телефон:</b>
+<br>
+<a>096 356 22 15</a>
+</div>
+</div>
+</div>
+</div>
+
+<div class="mainbox greenline mediaaboutus">
+<h3 class="sectionName">Медіа про нас</h3>	
+<a href="aboutus.php"><h3 class="goToLink">Про нас</h3></a>
+</div>
+<div class="mainbox aboutusvideo">
+<iframe width="100%" height="100%" src="https://www.youtube.com/embed/GT29OYPBzBU" frameborder="0" allowfullscreen></iframe>	
+</div>
+
+
+
+<!-- 			<div class="mainbox greenline">
+<h3 class="sectionName">Як з нами зв’язатися?</h3>	
+<a href="constructor.php"><h3 class="goToLink">Контакти</h3></a>
+</div> -->
+
+
+
+</div>
+
+<?php include "include/footer.php";?>
+
+
+<!-- JQuery -->
+<script src="include/jquery-3.3.1.js"></script>
+<script src="include/html2canvas.min.js"></script>
+<script src="include/canvas2image.js"></script>
+<script
+src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
+crossorigin="anonymous">	
+</script>
+<script src="scripts.js"></script>
+<script>
+var slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+var i;
+var slides = document.getElementsByClassName("mySlides");
+var dots = document.getElementsByClassName("dot");
+if (n > slides.length) {slideIndex = 1;}    
+if (n < 1) {
+slideIndex = slides.length;}
+for (i = 0; i < slides.length; i++) {
+slides[i].style.display = "none";  
+}
+for (i = 0; i < dots.length; i++) {
+dots[i].className = dots[i].className.replace(" activePhoto", "");
+}
+slides[slideIndex-1].style.display = "block";  
+dots[slideIndex-1].className += " activePhoto";
+}
+</script>
 </body>
 </html>
